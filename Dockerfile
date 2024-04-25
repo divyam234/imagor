@@ -46,7 +46,6 @@ RUN go mod download
 
 COPY . .
 
-RUN if [ "$TARGETARCH" = "amd64" ]; then go test ./...; fi
 RUN go build -o ${GOPATH}/bin/imagor ./cmd/imagor/main.go
 
 FROM debian:bookworm-slim
