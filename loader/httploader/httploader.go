@@ -229,9 +229,6 @@ func (h *HTTPLoader) Get(r *http.Request, image string) (*imagor.Blob, error) {
 		if resp.StatusCode >= 400 {
 			return body, size, imagor.NewErrorFromStatusCode(resp.StatusCode)
 		}
-		if !validateContentType(resp.Header.Get("Content-Type"), h.accepts) {
-			return body, size, imagor.ErrUnsupportedFormat
-		}
 		return body, size, nil
 	})
 	return blob, nil
