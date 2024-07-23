@@ -51,6 +51,9 @@ RUN go build -o ${GOPATH}/bin/imagor ./cmd/imagor/main.go
 FROM debian:bookworm-slim
 LABEL maintainer="adrian@cshum.com"
 
+RUN groupadd --gid 1000 user \
+    && useradd --uid 1000 --gid user --shell /bin/bash --create-home user
+
 COPY --from=builder /usr/local/lib /usr/local/lib
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 
@@ -78,7 +81,7 @@ ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so
 ENV PORT 8000
 
 # use unprivileged user
-USER nobody
+USER user
 
 ENTRYPOINT ["/usr/local/bin/imagor"]
 
